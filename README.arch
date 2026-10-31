@@ -1,0 +1,40 @@
+cargo-pkgbuild: reviewed Arch packaging starter
+==============================================
+
+Run `cargo pkgbuild` from a trusted Rust binary crate or workspace member.
+The command creates a NEW PKGBUILD in the current working directory. It will
+not overwrite an existing path, including a symbolic link. Preserve or move
+your reviewed recipe yourself before regenerating; there is no force switch.
+
+This is a draft generator, not an automatic AUR publisher or package auditor.
+Before sourcing or building its output, review the entire recipe and supply:
+
+- authentic upstream source URLs, pinned versions and verified checksums;
+- source-directory changes inside each build function;
+- native library/runtime dependencies and appropriate feature selections;
+- tested architectures, documentation and all required license notices.
+
+Prerelease hyphens become underscores in pkgver. The upstream release/tag may
+still contain hyphens: do not blindly use the normalized pkgver in source URLs.
+Generated architecture entries are suggestions inherited from upstream, NOT
+verified portability claims. Only native x86_64 builds of this downstream
+package have been exercised; cross compilation is outside this helper's scope.
+Custom target directories or Cargo configuration can require recipe changes.
+
+Manifest text is shell-quoted, author comments stay on one line, and NUL bytes
+in shell fields are rejected. Named/multiple binary targets are installed by
+their real names; library-only crates and virtual workspace roots are rejected.
+Choose a concrete workspace member instead. Metadata inspection is offline and
+does not resolve/download dependency graphs or create a Cargo.lock file.
+
+The helper invokes the installed Cargo and respects local Cargo configuration.
+These improvements do NOT sandbox Cargo, builds, proc macros or build scripts,
+nor do they make arbitrary upstream projects safe. Use reviewed inputs and an
+isolated build environment. A disk/write error can leave a partial NEW output
+file; existing files are never replaced. Inspect any error before using output.
+
+Upstream: https://github.com/kstep/cargo-pkgbuild
+Downstream package contributor: Danny (carrolldant-glitch)
+Contact: carrolldant@gmail.com
+Upstream MIT/Apache-2.0 licensing and original credits are retained.
+This usage note and check.py are MIT-licensed.

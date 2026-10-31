@@ -1,0 +1,5 @@
+/verification/
+/src/
+/pkg/
+/*.pkg.tar.*
+/*.tar.gz
